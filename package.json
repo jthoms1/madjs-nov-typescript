@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jthoms1/madjs-nov-typescript#readme",
   "devDependencies": {
+    "@types/node": "^8.0.51",
     "typescript": "^2.6.1"
   }
 }
