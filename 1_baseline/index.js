@@ -4,7 +4,7 @@ var dirPath = process.argv[2];
 if (!dirPath) {
     throw new Error('A directory path was not provided.');
 }
-var fullPath = path.resolve(__dirname, dirPath);
+var fullPath = path.resolve(process.cwd(), dirPath);
 var files = fs.readdirSync(fullPath);
 files.sort();
 console.log('Contents of directory ' + fullPath);
