@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Preact Deep Dive - MadJS</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+
+    </script>
+
+    <style>
+      .reveal section img.nostyle {
+          background: none;
+          border: none;
+          box-shadow: none;
+          margin: 0;
+      }
+      .reveal section img.roundup {
+          border: 2px solid #fff;
+          height: 40px;
+    	    width: 40px;
+    	    border-radius: 23px;
+    	    display: block;
+    	    margin: -15px auto 0;
+      }
+      .example-num {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 0.8em;
+        color: grey;
+      }
+      b {
+        font-weight: normal;
+        color:aqua;
+      }
+      i {
+        font-style: normal;
+        color: yellow;
+      }
+      img.trans {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+      }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h3>Drunken TypeScript</h3>
+          <p>
+            <small>
+              Dan Imhoff / <a href="http://twitter.com/dwieeb">@dwieeb</a>
+            </small>
+            <img class="roundup" src="images/dwieeb-logo.jpg" />
+          </p>
+          <p>
+            <small>
+              Josh Thomas / <a href="http://twitter.com/jthoms1">@jthoms1</a>
+            </small>
+            <img class="roundup" src="images/jthoms1-logo.png" />
+          </p>
+          <p><br/>
+            <a style="font-size: 0.8em" href="https://github.com/jthoms1/madjs-nov-typescript">
+              https://github.com/jthoms1/madjs-nov-typescript
+            </a>
+          </p>
+        </section>
+
+        <section>
+          <img class="trans" src="images/typescript-logo-lrg.png" width="500" />
+          <blockquote>
+            Its pretty cool.... 
+          </blockquote>
+        </section>
+
+        <section>
+          <h2>Preact's Goals</h2>
+          <ul>
+            <li class="fragment fadein"><b>Performance</b>: Render quickly & efficiently</li>
+            <li class="fragment fadein"><b>Size</b>: Small size, lightweight (approximately 3.5kb)</li>
+            <li class="fragment fadein"><b>Efficiency</b>: Effective memory usage (recycling, avoiding GC thrash)</li>
+            <li class="fragment fadein"><b>Understandability</b>: Understanding the codebase should take no more than a few hours</li>
+            <li class="fragment fadein"><b>Compatibility</b>: Preact aims to be largely compatible with the React API. preact-compat attempts to achieve as much compatibility with React as possible.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>How is it the same as React?</h2>
+          <ul>
+            <li>Virtual Dom</li>
+            <li>Component Composition</li>
+            <li>JSX + hyperscript based</li>
+            <li>State and Props</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>How is it different than React?</h2>
+          <ul>
+            <li class="fragment fadein">PropType Validation (preact-compat)</li>
+            <li class="fragment fadein">Synthetic Events (browser events only)</li>
+            <li class="fragment fadein">"className" is now "class" in JSX <span class="fragment">(yay!!!)</span></li>
+            <li class="fragment fadein">linkState for binding values to state updates</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Today's tiny frameworks</h2>
+          <ul>
+            <li class="fragment fadein">Leveraging the browser platform (ie9+)</li>
+            <li class="fragment fadein">Drop components on to websites or build entire apps</li>
+            <li class="fragment fadein">All about the Vdom and hyperscript</li>
+        </section>
+
+        <section>
+          <h2>Lets look at the code</h2>
+          <p>https://madjs.github.io/</p>
+        </section>
+
+        <section>
+          <h2>Questions?</h2>
+          <br/>
+          <ul>
+            <li>
+              <a href="https://jasonformat.com/wtf-is-jsx/">https://jasonformat.com/wtf-is-jsx/</a>
+            </li>
+            <li>
+              <a href="https://medium.com/@asolove/preact-internals-1-the-easy-parts-3a081fa36205">https://medium.com/@asolove/preact-internals-1-the-easy-parts-3a081fa36205</a>
+            </li>
+            <li>
+              <a href="https://preactjs.com/">https://preactjs.com/</a>
+            </li>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
