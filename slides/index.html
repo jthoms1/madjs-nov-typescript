@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Preact Deep Dive - MadJS</title>
+    <title>Drunken TypeScript - MadJS</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
@@ -102,47 +102,265 @@
         </section>
 
         <section>
-          <h2>Preact's Goals</h2>
+          <h2>But what is it?</h2>
           <ul>
-            <li class="fragment fadein"><b>Performance</b>: Render quickly & efficiently</li>
-            <li class="fragment fadein"><b>Size</b>: Small size, lightweight (approximately 3.5kb)</li>
-            <li class="fragment fadein"><b>Efficiency</b>: Effective memory usage (recycling, avoiding GC thrash)</li>
-            <li class="fragment fadein"><b>Understandability</b>: Understanding the codebase should take no more than a few hours</li>
-            <li class="fragment fadein"><b>Compatibility</b>: Preact aims to be largely compatible with the React API. preact-compat attempts to achieve as much compatibility with React as possible.</li>
+            <li class="fragment fadein">"Superset" of JavaScript</li>
+            <li class="fragment fadein">Type system for JS</li>
+            <li class="fragment fadein">Compiles to plain JS</li>
           </ul>
         </section>
 
         <section>
-          <h2>How is it the same as React?</h2>
+          <h2>Goals of TypeScript</h2>
           <ul>
-            <li>Virtual Dom</li>
-            <li>Component Composition</li>
-            <li>JSX + hyperscript based</li>
-            <li>State and Props</li>
+            <li class="fragment fadein">Provide opt-in type system</li>
+            <li class="fragment fadein">Use JS of the future NOW</li>
           </ul>
         </section>
 
         <section>
-          <h2>How is it different than React?</h2>
+          <h2>Drunken TypeScript</h2>
+          <img src="images/drunken-ready.gif">
+        </section>
+
+        <section>
+          <h2>Why types?</h2>
           <ul>
-            <li class="fragment fadein">PropType Validation (preact-compat)</li>
-            <li class="fragment fadein">Synthetic Events (browser events only)</li>
-            <li class="fragment fadein">"className" is now "class" in JSX <span class="fragment">(yay!!!)</span></li>
-            <li class="fragment fadein">linkState for binding values to state updates</li>
+            <li class="fragment fadein">Improve code quality &amp; understandability</li>
+            <li class="fragment fadein">Boost refactoring speed and effectiveness</li>
           </ul>
         </section>
 
         <section>
-          <h2>Today's tiny frameworks</h2>
-          <ul>
-            <li class="fragment fadein">Leveraging the browser platform (ie9+)</li>
-            <li class="fragment fadein">Drop components on to websites or build entire apps</li>
-            <li class="fragment fadein">All about the Vdom and hyperscript</li>
+          <h2>How does it work?</h2>
         </section>
 
         <section>
-          <h2>Lets look at the code</h2>
-          <p>https://madjs.github.io/</p>
+          <h2>How do you introduce it to an existing project?</h2>
+        </section>
+
+        <section>
+          <h1>The Type System</h1>
+        </section>
+
+        <section>
+          <img src="images/keep-moving.gif">
+        </section>
+
+        <section>
+          <h2>Declaration Spaces</h2>
+          <ul>
+            <li class="fragment fadein"><b>Value space</b>: <code>class</code>, <code>function</code>, <code>variable</code></li>
+            <li class="fragment fadein"><b>Type space</b>: <code>class</code>, <code>interface</code>, <code>type</code></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Declaring Types</h2>
+          <pre><code>
+          let num: number = 1;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Implicit vs Explicit</h2>
+          <pre><code>
+          let num = 1; // implicit, AKA inferred
+
+          let num: number = 1; // explicit
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Type Inference</h2>
+          <pre><code>
+          /**
+           * Cases: a &gt; b: return 1
+           *        a &lt; b: return -1
+           *        a = b: return 0
+           */
+          function strcmp(a: string, b: string) {
+            if (a === b) {
+              return 0;
+            }
+
+            return a &gt; b ? 1 : -1;
+          }
+
+          let result = strcmp("foo", "bar");
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Type Assertion</h2>
+          <ul>
+            <li class="fragment fadein">Works on subtypes</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          // NOPE
+          let team = &lt;number&gt;"Packers";
+          </code></pre>
+          <pre class="fragment fadein"><code>
+          // oh, ok
+          let team = &lt;number&gt;(&lt;any&gt;"Packers");
+
+          console.log(team.toFixed()); // ???
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+          // type inferred as `{}`
+          let user = {};
+
+          // Error: property 'name' does not exist on `{}`
+          user.name = "Dan";
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+          interface User {
+            name: string;
+          }
+
+          let user = &lt;User&gt;{};
+
+          // ok
+          user.name = "Dan";
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Type Assertion is Harmful</h2>
+          <ul>
+            <li class="fragment fadein">Overrides the inferred type</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          interface User {
+            name: string;
+          }
+
+          // no type assertion, `user` has explicit type `User`
+          const user: User = { name: "Dan" };
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>Interfaces</h1>
+        </section>
+
+        <section>
+          <h2>Interfaces</h2>
+          <ul>
+            <li class="fragment fadein">Duck typed</li>
+            <li class="fragment fadein">Meant for describing objects, classes, and functions</li>
+            <li class="fragment fadein">Can be named or anonymous</li>
+            <li class="fragment fadein">Can be "implemented"</li>
+            <li class="fragment fadein">Can be "extended"</li>
+            <li class="fragment fadein">Can be "merged"</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Implementing Interfaces</h2>
+          <ul>
+            <li class="fragment fadein">"This class <em>must</em> adhere to this interface"</li>
+            <li class="fragment fadein">Classes can implement one or more interfaces</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          interface Reader {
+            read(bytes: number): string;
+          }
+
+          class FileReader implements Reader {
+            read(bytes: number) {
+              // implementation
+            }
+          }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Extending Interfaces</h2>
+          <pre><code>
+          interface Reader {
+            read(bytes: number): string;
+          }
+
+          interface Writer {
+            write(str: string): void;
+          }
+
+          interface ReadStream extends Reader {
+            pipe(destination: Writer): void;
+          }
+
+          interface ReaderWriter extends Reader, Writer {}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Merging Interfaces</h2>
+          <ul>
+            <li class="fragment fadein">Common use case of <a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html">Declaration Merging</a></li>
+            <li class="fragment fadein">Used to add to third-party types (<a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation">Module Augmentation</a>)</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          interface Tea {
+            type: string;
+            country: string;
+          }
+
+          interface Tea {
+            region: string;
+          }
+
+          // invalid now, thankfully
+          let lipton: Tea = {
+            type: 'green',
+            country: 'UK',
+            // missing 'region'
+          };
+
+          // ok
+          let assam: Tea = {
+            type: 'black',
+            country: 'India',
+            region: 'Assam',
+          };
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Minimal Interfaces</h2>
+          <ul>
+            <li class="fragment fadein">Only specify what you need</li>
+          </ul>
+        </section>
+
+        <section>
+          <pre><code>
+  interface Car {
+    mpg: number;
+    horsepower: number;
+  }
+
+  interface Rocket {
+    mpg: number;
+    thrust: number;
+  }
+
+  let tesla3: Car = { mpg: Infinity, horsepower: 258 };
+  let saturnV: Rocket = { mpg: 0.000206, thrust: 7891000 };
+
+  function gallons(vehicle: { mpg: number; }, miles: number) {
+    return miles / vehicle.mpg;
+  }
+
+  gallons(tesla3, 100); // 100 miles, 0 gallons needed
+  gallons(saturnV, 1 / 5280); // 1 foot, 1.08768 gallons needed
+          </code></pre>
         </section>
 
         <section>
