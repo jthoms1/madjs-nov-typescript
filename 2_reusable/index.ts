@@ -1,28 +1,24 @@
 var path = require('path');
-var fs = require('fs');
+var forEachFileInDir = require('./util').forEachFileInDir;
+var getFileData = require('./util').getFileData;
 
 var dirPath = process.argv[2];
 if (!dirPath) {
   throw new Error('A directory path was not provided.');
 }
-var fullPath = path.resolve(process.cwd(), dirPath);
 
-var files = fs.readdirSync(fullPath)
-files.sort();
+var fullDirPath = path.resolve(dirPath);
 
-console.log('Contents of directory ' + fullPath);
+console.log('Contents of directory ' + fullDirPath);
 
-for (var i = 0; i < files.length; i++) {
-  var fileName = files[i];
-  var isHidden = fileName.charAt[0] === '.';
-
-  var filePath = path.join(dirPath, fileName);
-  var fileStat = fs.statSync(filePath);
-  var isDirectory = fileStat.isDirectory();
-
+forEachFileInDir(fullDirPath, function(filePath) {
+  var fileData = getFileData(filePath);
+  if (fileData.isHidden) {
+    return;
+  }
   var messageLine =
-    (isDirectory ? "d" : '-') + " " +
-    files[i];
+    (fileData.isDirectory ? "d" : '-') + " " +
+    fileData.pathData.base;
 
   console.log(messageLine);
-}
+});
