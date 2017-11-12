@@ -157,8 +157,13 @@
 
         <section>
           <h2>Declaring Types</h2>
-          <pre><code>
+          <pre class="fragment fadein"><code>
           let num: number = 1;
+          </code></pre>
+          <pre class="fragment fadein"><code>
+          function slugify(input: string): string {
+            // implementation
+          }
           </code></pre>
         </section>
 
@@ -360,6 +365,49 @@
 
   gallons(tesla3, 100); // 100 miles, 0 gallons needed
   gallons(saturnV, 1 / 5280); // 1 foot, 1.08768 gallons needed
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Type Aliases</h2>
+          <ul>
+            <li class="fragment fadein">Defined in type declaration space</li>
+            <li class="fragment fadein">Used for type declaration reusability</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+   type MyCustomType = string;
+   type MyCallbackFunc = (err: Error, data: MyInterface) =&gt; void;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Union Types</h2>
+          <ul>
+            <li class="fragment fadein">Two or more joined types</li>
+            <li class="fragment fadein">"this <b>or</b> that"</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          let strOrNum: string | number = "a string";
+          strOrNum = 12345; // ok
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Intersection Types</h2>
+          <ul>
+            <li class="fragment fadein">Two or more joined types</li>
+            <li class="fragment fadein">"this <b>and</b> that"</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          interface Foo {
+            foo: number;
+          }
+
+          interface Bar {
+            bar: number;
+          }
+
+          let foobar: Foo &amp; Bar = { foo: 1, bar: 2 };
           </code></pre>
         </section>
 
