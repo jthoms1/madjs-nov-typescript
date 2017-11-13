@@ -10,6 +10,10 @@ export interface FileData {
 }
 */
 
+/**
+ * Gather metadata about a file
+ * @param filePath path to the file
+ */
 export function getFileData(filePath: string) {
 
   const fileStat = fs.statSync(filePath);
@@ -25,6 +29,11 @@ export function getFileData(filePath: string) {
   };
 }
 
+/**
+ * Loop over the files in a directory and execute the callback for every file
+ * @param dirPath The directory path as a string
+ * @param callback The callback will be executing for every file found.
+ */
 export async function forEachFileInDir(dirPath: string, callback: (filePath: string) => void | Promise<void>) {
   const files = fs.readdirSync(dirPath).sort();
 

@@ -16,9 +16,6 @@ console.log('Contents of directory ' + fullDirPath);
     if (isHidden) {
       return;
     }
-    const messageLine =
-    `${isDirectory ? 'd' : '-'} ${pathData.base}`;
-
-    console.log(messageLine);
+    console.log(`${isDirectory ? 'd' : '-'} ${pathData.base}`);
   });
 })();
