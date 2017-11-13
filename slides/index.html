@@ -201,6 +201,7 @@
         <section>
           <h2>Type Assertion</h2>
           <ul>
+            <li class="fragment fadein">Used to coerce types</li>
             <li class="fragment fadein">Works on subtypes</li>
           </ul>
           <pre class="fragment fadein"><code>
@@ -260,6 +261,7 @@
         <section>
           <h2>Interfaces</h2>
           <ul>
+            <li class="fragment fadein">Defined in type declaration space</li>
             <li class="fragment fadein">Duck typed</li>
             <li class="fragment fadein">Meant for describing objects, classes, and functions</li>
             <li class="fragment fadein">Can be named or anonymous</li>
@@ -316,19 +318,15 @@
           <pre class="fragment fadein"><code>
           interface Tea {
             type: string;
-            country: string;
           }
 
           interface Tea {
+            country: string;
             region: string;
           }
 
-          // invalid now, thankfully
-          let lipton: Tea = {
-            type: 'green',
-            country: 'UK',
-            // missing 'region'
-          };
+          // thankfully, this is invalid
+          let lipton: Tea = { type: 'green' };
 
           // ok
           let assam: Tea = {
