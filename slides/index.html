@@ -469,6 +469,87 @@
         </section>
 
         <section>
+          <h2>Generics</h2>
+          <ul>
+            <li class="fragment fadein">Allows a component to work over a variety of types</li>
+            <li class="fragment fadein">In JavaScript, you can have arrays <b>of</b> anything:</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          let meetups = ["MadJS", "MadPy", "BigData"];
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+     let meetups: Array&lt;string&gt; = ["MadJS", "MadPy", "BigData"];
+          </code></pre>
+          <pre class="fragment fadein"><code>
+     let meetups: string[] = ["MadJS", "MadPy", "BigData"];
+          </code></pre>
+          <pre class="fragment fadein"><code>
+     let meetups = ["MadJS", "MadPy", "BigData"];
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+          let p = new Promise&lt;number&gt;(function(resolve, reject) {
+            resolve("nope."); // compile error
+          });
+
+          p.then(function(value) {
+            // 'value' is a number, no explicit types needed
+          });
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+          function fillArray(array: any[], value: any) {
+            // make copy of array and fill it
+            return array.concat().fill(value);
+          }
+
+          let result = fillArray([1, 2, 3], '');
+
+          // result === ['', '', ''], but the type is any[]
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+          function fillArray(array: any[], value: string) {
+            // make copy of array and fill it
+            return array.concat().fill(value);
+          }
+
+          let result = fillArray([1, 2, 3], '');
+
+          // result === ['', '', ''] and the type is string[] !!!
+          </code></pre>
+          <pre class="fragment fadein"><code>
+          // oh... :(
+          let result = fillArray([1, 2, 3], 0);
+          </code></pre>
+        </section>
+        <section>
+          <h2>Defining Generics</h2>
+          <ul>
+            <li>Generics have one or more <b>type parameter</b></li>
+          </ul>
+          <pre><code>
+          function fillArray&lt;T&gt;(array: any[], value: T): T[] {
+            // implementation
+          }
+
+          let result = fillArray&lt;string&gt;([1, 2, 3], '');
+          </code></pre>
+          <pre class="fragment fadein"><code>
+          let result = fillArray([1, 2, 3], '');
+          </code></pre>
+        </section>
+
+        <section>
           <h2>Questions?</h2>
           <br/>
           <ul>
