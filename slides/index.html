@@ -414,6 +414,63 @@
         </section>
 
         <section>
+          <h2>Type Guards</h2>
+          <ul>
+            <li class="fragment fadein">Runtime checks that guarantee types</li>
+          </ul>
+          <pre class="fragment fadein"><code>
+          let name = getName();
+
+          if (typeof name === 'string') {
+            // type of `name` guaranteed to be `string`
+          }
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code>
+        class Meetup { /* implementation */ }
+
+        class Party { /* implementation */ }
+
+        let event: Meetup | Party = chooseRandomEvent();
+
+        if (event instanceof Meetup) {
+          // `event` is an instance of `Meetup` (or subclass)
+        } else {
+          // going to a party!
+        }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>User-defined Type Guards</h2>
+          <ul>
+            <li class="fragment fadein">Guarantee custom types</li>
+            <li class="fragment fadein"><em>"HERE BE DRAGONS"</em></li>
+          </ul>
+        </section>
+
+        <section>
+          <pre><code>
+          interface User { id: number; name: string; }
+
+          function isUser(user: any): user is User {
+            return typeof user.id === 'number' &amp;&amp;
+                   typeof user.name === 'string';
+          }
+
+          let user = apiRequest('GET', '/user/12345');
+
+          if (!isUser(user)) {
+            throw new Error('bad user');
+          }
+
+          // `user` adheres to `User` interface
+          </code></pre>
+        </section>
+
+        <section>
           <h2>Questions?</h2>
           <br/>
           <ul>
