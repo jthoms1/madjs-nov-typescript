@@ -11,8 +11,8 @@ const fullDirPath = path.resolve(dirPath);
 console.log('Contents of directory ' + fullDirPath);
 
 (async () => {
-  await forEachFileInDir(fullDirPath, (filePath) => {
-    const { isHidden, isDirectory, pathData } = getFileData(filePath);
+  await forEachFileInDir(fullDirPath, async (filePath) => {
+    const { isHidden, isDirectory, pathData } = await getFileData(filePath);
     if (isHidden) {
       return;
     }
